@@ -110,7 +110,7 @@ static NSString *const kShareOptionUrl = @"url";
     }
 
     if (urlString != (id)[NSNull null] && urlString != nil) {
-        [activityItems addObject:[NSURL URLWithString:[urlString URLEncodedString]]];
+        [activityItems addObject:[NSURL URLWithString:urlString]];
     }
 
     UIActivity *activity = [[UIActivity alloc] init];
