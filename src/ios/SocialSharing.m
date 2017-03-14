@@ -6,6 +6,7 @@
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "ActivityViewController.h"
 
 static NSString *const kShareOptionMessage = @"message";
 static NSString *const kShareOptionSubject = @"subject";
@@ -115,7 +116,16 @@ static NSString *const kShareOptionUrl = @"url";
 
     UIActivity *activity = [[UIActivity alloc] init];
     NSArray *applicationActivities = [[NSArray alloc] initWithObjects:activity, nil];
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
+    ActivityViewController *activityVC = [[ActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                     UIActivityTypePrint,
+                                     UIActivityTypeAssignToContact,
+                                     UIActivityTypeSaveToCameraRoll,
+                                     UIActivityTypeAddToReadingList,
+                                     UIActivityTypePostToFlickr,
+                                     UIActivityTypePostToVimeo];
+      
+    activityVC.excludedActivityTypes = excludeActivities;
     if (subject != (id)[NSNull null] && subject != nil) {
       [activityVC setValue:subject forKey:@"subject"];
     }
