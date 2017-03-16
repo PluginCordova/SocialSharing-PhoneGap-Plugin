@@ -20,7 +20,7 @@
 //        [[activity activityType] isEqualToString:@"com.apple.mobilenotes.SharingExtension"]) {
 //        return YES;
 //    }
-    NSLog(@"activityType:%@/nactivityTitle:%@",[activity activityType],[activity activityTitle]);
+    NSLog(@"activityType:%@\n activityTitle:%@",[activity activityType],[activity activityTitle]);
     BOOL isWeiXin = [[activity activityType] isEqualToString:@"com.tencent.xin.sharetimeline"];
     BOOL isQQ = [[activity activityType] isEqualToString:@"com.tencent.mqq.ShareExtension"];
     BOOL isGuShiTie = [[activity activityType] isEqualToString:@"org.hotshare.everywhere.shareEx"];
@@ -29,6 +29,29 @@
         return  YES;
     }
     return [super _shouldExcludeActivityType:activity];
+}
+
+- (id)_availableActivitiesForItems:(id)arg1
+{
+    id activities = [super _availableActivitiesForItems:arg1];
+    NSMutableArray *filteredActivities = [NSMutableArray array];
+    
+    [activities enumerateObjectsUsingBlock:^(UISocialActivity*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSLog(@"activityType:%@\n activityTitle:%@",[obj activityType],[obj activityTitle]);
+        
+        BOOL isWeiXin = [[obj activityType] isEqualToString:@"com.tencent.xin.sharetimeline"];
+        BOOL isQQ = [[obj activityType] isEqualToString:@"com.tencent.mqq.ShareExtension"];
+        BOOL isGuShiTie = [[obj activityType] isEqualToString:@"org.hotshare.everywhere.shareEx"];
+        
+        if (isWeiXin || isQQ || isGuShiTie ) {
+            return ;
+        }
+        [filteredActivities addObject:obj];
+        
+    }];
+    
+    return [NSArray arrayWithArray:filteredActivities];
 }
 
 - (void)viewDidLoad {

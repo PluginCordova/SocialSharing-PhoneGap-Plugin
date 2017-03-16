@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@interface UISocialActivity : NSObject
+
+- (id)activityType;
+
+- (id)activityTitle;
+
+@end
+
 @interface UIActivityViewController (Private)
 
 - (BOOL)_shouldExcludeActivityType:(UIActivity*)activity;
+
+- (id)_availableActivitiesForItems:(id)arg1;
 
 @end
 
